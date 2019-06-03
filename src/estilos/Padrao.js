@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-    ex:{
+    titulo:{
        paddingHorizontal: 15,
        marginVertical: 5,
        borderRadius: 10,
@@ -9,5 +9,12 @@ export default StyleSheet.create({
        borderColor: '#222',
        fontSize: 24,
        fontWeight: 'bold',
-    }
+    },
+    input:{
+        height:80,
+        width:"100%",
+        fontSize:36,
+        marginTop:10,
+        borderWidth: 2,
+      }
 })
