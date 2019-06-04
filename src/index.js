@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   TextInput,
@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 
-export default class App extends React.Component {
+export default class App extends Component {
   state = {
     numeros: 0,
     indice: 0,
