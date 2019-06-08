@@ -65,5 +65,14 @@ export default StyleSheet.create({
   resultText: {
     fontSize: 17,
     padding: 1
+  },
+  dateIcon: {
+    position: 'absolute',
+    left: 0,
+    top: 4,
+    marginLeft: 0
+  },
+  dateInput: {
+    marginLeft: 36
   }
 });
