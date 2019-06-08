@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import DatePicker from 'react-native-datepicker'
-
+import { RadioButton } from 'react-native-paper';
 import styles from './styles';
 
 export default class App extends Component {
@@ -19,6 +19,7 @@ export default class App extends Component {
     comparacoes: 0,
     data: ""
   };
+  
 
   maisUm = () => {
     let { numeros, indice, trocas, comparacoes, data } = this.state;
@@ -82,6 +83,7 @@ export default class App extends Component {
 
   render() {
     const { numeros } = this.state;
+    const { checked } = this.state;
 
     return (
       <View style={styles.container}>
@@ -113,8 +115,42 @@ export default class App extends Component {
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             onDateChange={(data) => {this.setState({data: data})}}
-            
           />
+
+            <View style={{flex: 1, flexDirection: 'row'}}>
+                <View>
+                  <RadioButton
+                    value="primeiro"
+                    status={checked === 'primeiro' ? 'checked' : 'unchecked'}
+                    onPress={() => { this.setState({ checked: 'primeiro' }); }}
+                  />
+                  <Text>Bolha</Text>
+                </View> 
+                <View>
+                  <RadioButton
+                    value="segundo"
+                    status={checked === 'segundo' ? 'checked' : 'unchecked'}
+                    onPress={() => { this.setState({ checked: 'segundo' }); }}
+                  />
+                  <Text>Seleção</Text>
+                </View>
+                <View>
+                  <RadioButton
+                    value="terceiro"
+                    status={checked === 'terceiro' ? 'checked' : 'unchecked'}
+                    onPress={() => { this.setState({ checked: 'terceiro' }); }}
+                  />
+                  <Text>Fila</Text>
+                </View>
+                <View>
+                  <RadioButton
+                    value="quarto"
+                    status={checked === 'quarto' ? 'checked' : 'unchecked'}
+                    onPress={() => { this.setState({ checked: 'quarto' }); }}
+                  />
+                  <Text>QuickSort</Text>
+                </View>
+              </View>
 
           <TouchableHighlight
             style={styles.button}
