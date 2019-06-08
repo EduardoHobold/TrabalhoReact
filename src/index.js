@@ -103,7 +103,7 @@ export default class App extends Component {
             onChangeText={text => this.setState({ numeros: text })}
           />
           <DatePicker
-            style={{width: 300}}
+            style={[styles.DatePicker, styles.input]}
             date={this.state.data}
             mode="date"
             placeholder="Informe a data"
@@ -113,7 +113,6 @@ export default class App extends Component {
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             onDateChange={(data) => {this.setState({data: data})}}
-            style={styles.dateIcon}
             
           />
 
@@ -126,14 +125,18 @@ export default class App extends Component {
           </TouchableHighlight>
 
           <View style={styles.containerResults}>
+
             <View style={styles.resultTitle}>
               <Text style={styles.textButton}>Resultados</Text>
             </View>
+
             <View style={styles.results}>
+
               <Text style={styles.resultText}>Índice: {this.state.indice}</Text>
               <Text style={styles.resultText}>Trocas: {this.state.trocas}</Text>
-              <Text style={styles.resultText}>Comparações: {this.state.comparacoes}
-              </Text>
+              <Text style={styles.resultText}>Comparações: {this.state.comparacoes}</Text>
+              <Text style={styles.resultText}>Data: {this.state.data}</Text>
+
             </View>
           </View>
         </View>
