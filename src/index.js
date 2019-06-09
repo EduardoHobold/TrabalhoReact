@@ -4,11 +4,12 @@ import {
   TextInput,
   View,
   TouchableHighlight,
-  StatusBar
+  StatusBar,
+  Keyboard
 } from 'react-native';
-
-import DatePicker from 'react-native-datepicker'
+import DatePicker from './componentes/DatePicker';
 import { RadioButton } from 'react-native-paper';
+
 import styles from './styles';
 
 export default class App extends Component {
@@ -16,8 +17,10 @@ export default class App extends Component {
     numeros: 0,
     indice: 0,
     trocas: 0,
+    checked: 'primeiro',
     comparacoes: 0,
-    data: ""
+    data: '',
+    dataResult: ''
   };
   
 
@@ -25,6 +28,14 @@ export default class App extends Component {
     let { numeros, indice, trocas, comparacoes, data } = this.state;
 
     let vetor = [];
+
+    if(!numeros) {
+      this.inputNumeros.focus();
+      return;
+    }
+
+    // Esconde o teclado caso ele esteje aberto
+    Keyboard.dismiss();
 
     vetor = numeros.split(/[,-\s]/);
 
@@ -68,7 +79,9 @@ export default class App extends Component {
       trocas: 0,
       comparacoes: 0,
       numeros: 0,
-      data: ""
+      data: '',
+      dataResult: '',
+      checked: 'primeiro'
     });
   };
 
@@ -81,9 +94,16 @@ export default class App extends Component {
     return lista;
   };
 
+  _formatData = _prData => {
+    if (_prData === '') return;
+
+    _prData = _prData.split('/');
+
+    this.setState({ data: `${_prData[2]}/${_prData[1]}/${_prData[0]}`, dataResult: `${_prData[0]}/${_prData[1]}/${_prData[2]}` });
+  }
+
   render() {
-    const { numeros } = this.state;
-    const { checked } = this.state;
+    const { numeros, checked, data } = this.state;
 
     return (
       <View style={styles.container}>
@@ -97,60 +117,67 @@ export default class App extends Component {
         </View>
         <View style={styles.form}>
           <TextInput
+            ref={input => this.inputNumeros = input}
             placeholder="Informe os números"
             keyboardType="numeric"
+            maxLength={30}
             placeholderTextColor="#AAA"
             style={styles.input}
             value={numeros}
             onChangeText={text => this.setState({ numeros: text })}
           />
+
           <DatePicker
-            style={[styles.DatePicker, styles.input]}
-            date={this.state.data}
+            style={styles.datePicker}
+            date={data}
             mode="date"
-            placeholder="Informe a data"
+            placeholder="Informe uma data"
             format="YYYY-MM-DD"
             minDate="2010-01-01"
             maxDate="2050-01-01"
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
-            onDateChange={(data) => {this.setState({data: data})}}
+            onDateChange={data => this._formatData(data)}
           />
 
-            <View style={{flex: 1, flexDirection: 'row'}}>
-                <View>
-                  <RadioButton
-                    value="primeiro"
-                    status={checked === 'primeiro' ? 'checked' : 'unchecked'}
-                    onPress={() => { this.setState({ checked: 'primeiro' }); }}
-                  />
-                  <Text>Bolha</Text>
-                </View> 
-                <View>
-                  <RadioButton
-                    value="segundo"
-                    status={checked === 'segundo' ? 'checked' : 'unchecked'}
-                    onPress={() => { this.setState({ checked: 'segundo' }); }}
-                  />
-                  <Text>Seleção</Text>
-                </View>
-                <View>
-                  <RadioButton
-                    value="terceiro"
-                    status={checked === 'terceiro' ? 'checked' : 'unchecked'}
-                    onPress={() => { this.setState({ checked: 'terceiro' }); }}
-                  />
-                  <Text>Fila</Text>
-                </View>
-                <View>
-                  <RadioButton
-                    value="quarto"
-                    status={checked === 'quarto' ? 'checked' : 'unchecked'}
-                    onPress={() => { this.setState({ checked: 'quarto' }); }}
-                  />
-                  <Text>QuickSort</Text>
-                </View>
-              </View>
+          <View style={styles.containerRadioButtons}>
+            <View style={styles.radioButton}>
+              <RadioButton
+                value="primeiro"
+                color="#8B78DC"
+                status={checked === 'primeiro' ? 'checked' : 'unchecked'}
+                onPressIn={() => this.setState({ checked: 'primeiro' })}
+              />
+              <Text>Bolha</Text>
+            </View> 
+            <View style={styles.radioButton}>
+              <RadioButton
+                value="segundo"
+                color="#8B78DC"
+                status={checked === 'segundo' ? 'checked' : 'unchecked'}
+                onPressIn={() => this.setState({ checked: 'segundo' })}
+              />
+              <Text>Seleção</Text>
+            </View>
+            <View style={styles.radioButton}>
+              <RadioButton
+                value="terceiro"
+                color="#8B78DC"
+                status={checked === 'terceiro' ? 'checked' : 'unchecked'}
+                onPressIn={() => this.setState({ checked: 'terceiro' })}
+              />
+              <Text>Fila</Text>
+            </View>
+            <View style={styles.radioButton}>
+              <RadioButton
+                value="quarto"
+                color="#8B78DC"
+                status={checked === 'quarto' ? 'checked' : 'unchecked'}
+                onPressIn={() => this.setState({ checked: 'quarto' })}
+              />
+              <Text>QuickSort</Text>
+            </View>
+          </View>
 
           <TouchableHighlight
             style={styles.button}
@@ -161,18 +188,15 @@ export default class App extends Component {
           </TouchableHighlight>
 
           <View style={styles.containerResults}>
-
             <View style={styles.resultTitle}>
               <Text style={styles.textButton}>Resultados</Text>
             </View>
 
             <View style={styles.results}>
-
               <Text style={styles.resultText}>Índice: {this.state.indice}</Text>
               <Text style={styles.resultText}>Trocas: {this.state.trocas}</Text>
               <Text style={styles.resultText}>Comparações: {this.state.comparacoes}</Text>
-              <Text style={styles.resultText}>Data: {this.state.data}</Text>
-
+              <Text style={styles.resultText}>Data: {this.state.dataResult}</Text>
             </View>
           </View>
         </View>

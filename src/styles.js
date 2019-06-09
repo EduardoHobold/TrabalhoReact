@@ -20,6 +20,29 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center'
   },
+  datePicker: {
+    height: 50,
+    borderRadius: 10,
+    width: Dimensions.get('screen').width - 50,
+    marginTop: 10,
+    justifyContent: 'center',
+    borderColor: '#707070',
+    borderWidth: 0.5
+  },
+  containerRadioButtons: {
+    flex: 1,
+    minHeight: 80,
+    maxHeight: 80,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 15
+  },
+  radioButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   button: {
     marginTop: 10,
     alignItems: 'center',
