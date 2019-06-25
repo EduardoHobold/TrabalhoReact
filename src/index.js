@@ -44,6 +44,8 @@ export default class App extends Component {
     let tamanho = vetor.length - 1;
     let tamanhoB = vetor.length - 1;
 
+    if(checked = "primeiro"){
+      
     indice = tamanho;
 
     for (let i = 0; i < tamanho; i++) {
@@ -61,6 +63,10 @@ export default class App extends Component {
         }
       }
       tamanhoB--;
+    }
+
+    }else if(checked == "segundo"){
+
     }
 
     this.setState({
@@ -86,8 +92,7 @@ export default class App extends Component {
   };
 
   converter = (lista) => {
-
-    lista.forEach( item => {
+      lista.forEach( item => {
       item = parseFloat(item);
     });
 
