@@ -25,7 +25,7 @@ export default class App extends Component {
   
 
   maisUm = () => {
-    let { numeros, indice, trocas, comparacoes, data } = this.state;
+    let { numeros, indice, trocas, comparacoes, data, checked } = this.state;
 
     let vetor = [];
 
@@ -41,12 +41,12 @@ export default class App extends Component {
 
     vetor = this.converter(vetor);
 
+    indice = vetor.length-1;
+
+    if(checked == "primeiro"){
+      
     let tamanho = vetor.length - 1;
     let tamanhoB = vetor.length - 1;
-
-    if(checked = "primeiro"){
-      
-    indice = tamanho;
 
     for (let i = 0; i < tamanho; i++) {
       for (let x = 0; x < tamanhoB; x++) {
@@ -66,6 +66,115 @@ export default class App extends Component {
     }
 
     }else if(checked == "segundo"){
+      for(let i = 0;i < vetor.length;i++){
+        temp1 = vetor[i];
+        cont = 0;
+        var t = false;
+        for(let x = i+1;x < vetor.length;x++){
+
+            if( vetor[x] < temp1){
+                temp1 = vetor[x];
+                cont = x;
+                t = true;
+            }
+            comparacoes++;
+        };
+
+        if(t){
+            aux = vetor[i];
+            vetor[i] = vetor[cont];
+            vetor[cont] = aux;
+            trocas++;
+        }
+    }
+    }else if(checked == "terceiro"){
+      var stop = true;
+      var temp1 = 0;
+      var temp2 = 0;
+      for(let i = 1;i < vetor.length;i++){
+        if(vetor[i-1] > vetor[i]){
+            stop = true;
+            if(stop){    
+                for(let x = i;0 < x;x--){
+                      if(vetor[x-1] > vetor[x]){
+                          temp1 = vetor[x];
+                          temp2 = vetor[x-1];
+                          vetor[x] = temp2;
+                          vetor[x-1] = temp1;
+                          trocas++;
+                          comparacoes++;
+                      }else{
+                          stop = false;
+                          comparacoes++;
+                      } 
+                }
+            }   
+        }
+      }
+    }else if(checked == "quarto"){
+
+      function trocaEsquerdaPorDireita(vetor, esquerda, direita) {
+        var temp = vetor[esquerda];
+        vetor[esquerda] = vetor[direita];
+        vetor[direita] = temp;
+    }
+    
+    function quickSort(vetor, esquerda, direita) {
+        var index;
+        if (vetor.length > 1) {
+            index = pivoOrdenado(vetor, esquerda, direita); //retorna posicao do pivo em sua posicao correta
+    
+            if (esquerda < index - 1) { //verifica se existem elementos na esquerda para ordenar se sim irá refazer todo o processo de maneira recursiva
+                quickSort(vetor, esquerda, index - 1); //pivo passara a ser o elemento da direita
+            }
+    
+            if (index < direita) { //verifica se existem elementos na direita para ordenar se sim irá refazer todo o processo de maneira recursiva
+                quickSort(vetor, index, direita); //pivo passara a ser o elemento da esquerda
+            }
+        }
+        return vetor;
+    }
+    
+    function pivoOrdenado(vetor, esquerda, direita) {
+        var pivo = vetor[medianaDeTres(vetor, esquerda, direita)], //pivo
+            i = esquerda, //posicao da esquerda
+            j = direita; //posicao da direita
+    
+        while (i <= j) { //equanto esquerda for menor ou igual a direita [posicao]
+    
+            while (vetor[i] < pivo) { //enquanto pivo for maior que esquerda [valor]
+                i++;                  //quando sair do posicionamento da esquerda verifica a direita
+                comparacoes++;
+            }
+    
+            while (vetor[j] > pivo) { //enquanto pivo for menor que a direita [valor]
+                j--;                  //quando sair do posicionamento da direita verifica as posicoes resultantes
+                comparacoes++;
+            }
+    
+            if (i <= j) {
+                trocaEsquerdaPorDireita(vetor, i, j); //caso a esquerda for menor ou igual que a direita, troca os valores e percorre tudo novamente
+                i++;
+                j--;
+                trocas++;
+            }
+        }
+        return i; //quanto terminar o processo a posicao do i será o pivo ordenado
+    }
+    
+    function medianaDeTres(vetor, esquerda, direita) {
+        let meio = Math.floor((direita + esquerda) / 2); //pega a posição do meio do vetor (caso numero quebrado arredonda)
+        if (vetor[esquerda] <= vetor[meio] <= vetor[direita]) {
+            return meio;
+        } else if (vetor[meio] <= vetor[esquerda] <= vetor[direita]) {
+            return esquerda;
+        } else if (vetor[esquerda] <= vetor[direita] <= vetor[meio]){
+            return meio;
+        }
+    }
+    
+    // first call to quick sort
+    var vetorOrdenado = quickSort(vetor, 0, vetor.length - 1);
 
     }
 
@@ -171,7 +280,7 @@ export default class App extends Component {
                 status={checked === 'terceiro' ? 'checked' : 'unchecked'}
                 onPressIn={() => this.setState({ checked: 'terceiro' })}
               />
-              <Text>Fila</Text>
+              <Text>Inserção</Text>
             </View>
             <View style={styles.radioButton}>
               <RadioButton
