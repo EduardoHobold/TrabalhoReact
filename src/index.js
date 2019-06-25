@@ -66,7 +66,6 @@ export default class App extends Component {
     }
 
     }else if(checked == "segundo"){
-      trocas = 1;
       for(let i = 0;i < vetor.length;i++){
         temp1 = vetor[i];
         cont = 0;
@@ -92,6 +91,7 @@ export default class App extends Component {
       var stop = true;
       var temp1 = 0;
       var temp2 = 0;
+      trocas = 1;
       for(let i = 1;i < vetor.length;i++){
         if(vetor[i-1] > vetor[i]){
             stop = true;
