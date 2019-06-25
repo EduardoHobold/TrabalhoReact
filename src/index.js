@@ -44,7 +44,7 @@ export default class App extends Component {
     indice = vetor.length-1;
 
     if(checked == "primeiro"){
-      
+    trocas = 1;
     let tamanho = vetor.length - 1;
     let tamanhoB = vetor.length - 1;
 
@@ -66,6 +66,7 @@ export default class App extends Component {
     }
 
     }else if(checked == "segundo"){
+      trocas = 1;
       for(let i = 0;i < vetor.length;i++){
         temp1 = vetor[i];
         cont = 0;
